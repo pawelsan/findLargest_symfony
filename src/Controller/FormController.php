@@ -11,30 +11,19 @@
     use Symfony\Component\Form\Extension\Core\Type\NumberType;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-    // use Symfony\Component\Validator\Constraints as Assert;
-    // use Symfony\Component\Validator\Mapping\ClassMetadata;
-
-    // use Symfony\Component\Validator\Constraints\NotBlank;
-
     class FormController extends Controller {
         /**
          * @Route("/", name="new_input")
          * @Method({"GET", "POST"})
          */
         public function index(Request $request) {
-            // return new Response('<html><body>Ciało</body></html>');
-            // $defaultData = ['message' => 'Wpisz numer'];
             $form = $this->createFormBuilder()
                 ->add('number', NumberType::class, array(
                     'label' => 'Numer:',
                     'attr' => array(
-                        'placeholder' => 'Wpisz numer',
+                        'placeholder' => 'Dodaj test-case',
                         'class' => 'form-control'
-                    ),
-                    // 'constraints' => array(
-                    // new NotBlank(),
-                    // // new Length(['min' => 3]),
-                    // ),
+                    )
                 ))
                 ->add('send', SubmitType::class, array(
                     'label' => 'Zaakceptuj',
@@ -44,7 +33,7 @@
             $form->handleRequest($request);
             $myArray = array(0, 1);
             $n = NULL;
-            $rangeError = NULL;
+            $rangeError = FALSE;
             if($form->isSubmitted() && $form->isValid()) {
                 $number = $form->getData();
    
@@ -70,7 +59,7 @@
                     array_pop($myArray);
                     };
                 } else {
-                    $rangeError = "Wpisz liczbę z przedziału 1 do 99999";
+                    $rangeError = TRUE;
                 }
             };
             $largest = max($myArray);
@@ -80,7 +69,7 @@
                 'n' => $n,
                 'largest' => $largest,
                 'rangeError' => $rangeError,
-                'form_instances' => 10
+                'error' => "Wpisz liczbę z przedziału 1 do 99999"
             ]);
 
         }

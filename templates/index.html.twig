@@ -9,89 +9,22 @@ Formularz w Symfony 4
     <h1>Wyszukiwanie największej liczby w ciągu</h1>
     <p>Wpisz index (n) ostatniej liczby w ciągu. Długośc zbioru wynosić będzie n+1.</p>
     <p>Index musi zawierać się w zbiorze liczb od 1 do 99999 włącznie.</p>
-{# {{form_start(form)}} #}
-{# {{form_row(form.number)}}
-{{form_row(form.send)}} #}
 
-
-{{ form_start(form, {'attr': {'class': 'mb-3'}}) }}
-
-    <div class="form-group">
-    {% if form_errors(form.number)|length %}
-        <div class="alert alert-danger"  role="alert">
-            {{ form_errors(form.number) }}
+    {{ form_start(form, {'attr': {'class': 'mb-3'}}) }}
+        <div class="form-group">
+        {% if form_errors(form.number)|length or rangeError %}
+            <div class="alert alert-danger"  role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+            {{ form_label(form.number) }}
+            {{ form_widget(form.number) }}
+            {{ form_row(form.send) }}
         </div>
+    {{ form_end(form) }}
+
+    {% if n %}
+    <p>Największa liczba w ciągu złożonym z {{n+1}} liczb to <span>{{largest}}</span></p>
     {% endif %}
-        {{ form_label(form.number) }}
-        {{ form_widget(form.number) }}
-        {{ form_row(form.send) }}
-    </div>
-{{ form_end(form) }}
-
-
-{# {{form_widget(form, {'attr': {'class': 'input-group'}})}} #}
-{# {{form_end(form)}} #}
-{% if n %}
-<p>Największa liczba w ciągu złożonym z {{n+1}} liczb to <span>{{largest}}</span></p>
-{% else %}
-<div class="alert alert-danger"  role="alert">
-{{rangeError}}
 </div>
-{% endif %}
-</div>
-
-{# <div class="container">
-    <h1>Wyszukiwanie największej liczby w ciągu</h1>
-    <p>Wpisz index (n) ostatniej liczby w ciągu. Długośc zbioru wynosić będzie n+1.</p>
-    <p>Index musi zawierać się w zbiorze liczb od 1 do 99999 włącznie.</p>
-    <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-        <div class="input-group">
-            <label for="">Wpisz n:</label>
-            <input type="text"  class="form-control" name="number">
-        </div>
-        <input type="submit" class="btn btn-primary" value="Zaakceptuj">
-    </form>
-</div> #}
-    {# <?php
-    if(isset($_POST['number'])) {
-        $min = 1;
-        $max = 99999;
-        if( ctype_digit($_POST['number']) && $_POST['number'] >= 1 && $_POST['number'] <= 99999) {
-            function findLargest($n){
-                // initial elements of an array
-                // - according to the task it has to have at least 2 elements
-                // index of the last one has to be greater or equal 1
-                $myArray = array(0, 1);
-                // conditions for an n that is an odd number
-                if ($n % 2 == 1) {
-                    for ($i = 0; $i <= ($n - 1) / 2; $i++) {
-                
-                        $myArray[2 * $i] = $myArray[$i];
-                        $myArray[2 * $i + 1] = $myArray[$i] + $myArray[$i + 1];
-                
-                    };
-                // conditions for n that is an even number
-                } else {
-                    for ($i = 0; $i <= $n / 2; $i++) {
-                
-                        $myArray[2 * $i] = $myArray[$i];
-                        $myArray[2 * $i + 1] = $myArray[$i] + $myArray[$i + 1];
-                
-                    };
-                    // removing the last elemtn of the array as the index of its last element would be greater than the value of n by one
-                   array_pop($myArray);
-                };
-                $largest = max($myArray);
-                // echo '<pre>';
-                // print_r($myArray);
-                // echo '</pre>';
-                echo "<p>Największa liczba w zbiorze, której ostatni element ma index <span style='font-weight:bold'>".$n."</span> to: <span style='font-weight:bold'>".$largest."</span></p>";
-                };
-                findLargest(htmlentities($_POST['number']));
-        } else {
-            echo "<p style='color:red'>Wpisz liczbę całkowitę w zakresie 1 do 99999 włącznie</p>";
-        };
-
-    };
-    ?> #}
 {% endblock %}
