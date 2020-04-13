@@ -7,8 +7,7 @@ Formularz w Symfony 4
 {% block body %}
 <div class="container">
     <h1>Wyszukiwanie największej liczby w ciągu</h1>
-    <p>Wpisz index (n) ostatniej liczby w ciągu. Długośc zbioru wynosić będzie n+1.</p>
-    <p>Index musi zawierać się w zbiorze liczb od 1 do 99999 włącznie.</p>
+    <p>Wpisz liczbę (test case) oznaczającą index ostatniej liczby w ciągu</p>
 
     {{ form_start(form, {'attr': {'class': 'mb-3'}}) }}
         <div class="form-group">
@@ -24,7 +23,7 @@ Formularz w Symfony 4
     {{ form_end(form) }}
 
     {% if n %}
-    <p>Największa liczba w ciągu złożonym z {{n+1}} liczb to <span>{{largest}}</span></p>
+    <p>Test case: {{n}}. Wynik: <span>{{largest}}</span></p>
     {% endif %}
 </div>
 {% endblock %}

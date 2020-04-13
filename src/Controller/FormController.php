@@ -19,19 +19,19 @@
         public function index(Request $request) {
             $form = $this->createFormBuilder()
                 ->add('number', NumberType::class, array(
-                    'label' => 'Numer:',
+                    'label' => 'Test Case:',
                     'attr' => array(
-                        'placeholder' => 'Dodaj test-case',
+                        'placeholder' => 'Dodaj test case',
                         'class' => 'form-control'
                     )
                 ))
                 ->add('send', SubmitType::class, array(
-                    'label' => 'Zaakceptuj',
+                    'label' => 'Wprowadź',
                     'attr' => array('class' => 'btn btn-primary mt-3')
                 ))
                 ->getForm();
             $form->handleRequest($request);
-            $myArray = array(0, 1);
+            $testArray = array(0, 1);
             $n = NULL;
             $rangeError = FALSE;
             if($form->isSubmitted() && $form->isValid()) {
@@ -43,26 +43,26 @@
                     if ($n % 2 == 1) {
                         $i = 0;
                         while($i <= ($n - 1) / 2) {
-                            $myArray[2 * $i] = $myArray[$i];
-                            $myArray[2 * $i + 1] = $myArray[$i] + $myArray[$i + 1];
+                            $testArray[2 * $i] = $testArray[$i];
+                            $testArray[2 * $i + 1] = $testArray[$i] + $testArray[$i + 1];
                             $i++;
                         };
                     // conditions for n that is an even number
                     } else {
                         $i = 0;
                         while($i <= $n / 2) {
-                            $myArray[2 * $i] = $myArray[$i];
-                            $myArray[2 * $i + 1] = $myArray[$i] + $myArray[$i + 1];
+                            $testArray[2 * $i] = $testArray[$i];
+                            $testArray[2 * $i + 1] = $testArray[$i] + $testArray[$i + 1];
                             $i++;
                         };
                         // removing the last elemtn of the array as the index of its last element would be greater than the value of n by one
-                    array_pop($myArray);
+                    array_pop($testArray);
                     };
                 } else {
                     $rangeError = TRUE;
                 }
             };
-            $largest = max($myArray);
+            $largest = max($testArray);
 
             return $this->render('index.html.twig', [
                 'form' => $form->createView(),
