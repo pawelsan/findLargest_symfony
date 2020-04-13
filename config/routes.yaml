@@ -1,0 +1,5 @@
+# @format
+
+# index:
+#   path: /
+#   controller: App\Controller\FormController::index
